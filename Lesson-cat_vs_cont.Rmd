@@ -1,0 +1,209 @@
+---
+title: "Lesson - Continuous vs. Discrete Variables in ggplot2"
+author: "Angela Zoss"
+date: "1/26/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+## Setup
+
+```{r setup, message=FALSE}
+
+library(tidyverse)
+
+gapminder <- read_csv("https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/gh-pages/_episodes_rmd/data/gapminder_data.csv")
+
+```
+
+## Introduction
+
+Understanding how to connect data to the different components of a chart is a skill that can greatly improve the effectiveness of the chart. A poor match between data types and visual properties can make it difficult or even impossible to make comparisons between data points or see trends in a visualization.
+
+## Learning Outcomes
+
+In this lesson, you will:
+
+- distinguish between continuous and discrete data
+- explore mappings between data types and aesthetics
+- evaluate the effectiveness of certain mappings in the context of a particular geometry and dataset
+- identify cues in the plot that signal how ggplot2 is mapping a particular variable
+
+## Using Data Types to Inform Mappings
+
+When we build visualizations out of data, we need to convert data into geometric objects. Geometric objects have a variety of properties that can be used to display data, including properties like their placement on a grid, their size, their color, etc. For data mapping, those properties can be grouped into two useful categories: those that allow for continuous variation over their range of possible values, and those that have a finite list of discrete values. 
+
+An example of a visual property that varies continuously is size. While size can never be negative or even zero, all values above zero are fair game. An example of a visual property that has a finite list of possible values is shape. Especially when considering shapes that are built-in to ggplot2 and shapes that can be differentiated easily from each other, there is a limit to the number of shapes that can be used to visualize data.
+
+## Relationship Between Geometry and Aesthetics
+
+Visual properties vary greatly by the geometric object used in the visualization. Each geometry has a set of required and optional properties, or aesthetics. While you have already learned the mechanics of mapping variables to aesthetics, we will now explore how to optimize these matches, as well as where the aesthetic can vary either continuously or discretely.
+
+Let's begin with a common geometry, geom_point(). To learn about the possible aesthetics for geom_point(), we can use ?geom_point to call up the help documentation.
+
+Under the section titled, "Aesthetics," we see a list of nine aesthetics: x, y, alpha, colour, fill, group, shape, size, stroke. Note that x and y are in bold, indicating that they are required aesthetics.
+
+This documentation also provides some information about what data types work well for the default aesthetics x and y. See in the "Description" section at the top how it recommends using continuous variables for x and y. 
+
+## Mapping Data to Aesthetics - Continuous Data
+
+To test this out, let us use our gapminder dataset. First, let's use str() to remind ourselves what the data types of our variables are.
+
+```{r structure_gap}
+
+str(gapminder)
+
+```
+
+
+The str() results show that this dataset has variables with two different types - numerical and character. Which data type varies continuously? Which includes discrete values?
+
+Now, as recommended in the help documentation, we will match two of our numerical variables (that is, continuous variables) up with the x and y aesthetics. Create a plot with geom_point() that maps gdpPercap to x and lifeExp to y.
+
+```{r plot_cont_cont}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+
+```
+
+In terms of matching data types to visual properties, this chart seems to work well. The continuous variables gdpPercap and lifeExp vary continuously (if not uniformly) along the x and y axes of the plot. Just as a reminder, continuous means that all values in the range of possible values are valid. 
+
+Notice what the axes in the plot look like when a continuous variable is mapped. We see tick marks and tick labels at regular intervals along a line from the lowest value to the highest value. We don't see a tick mark and tick label for every possible x and y value in the chart. That is another clue about whether the aesthetic is treating the data as continuous or discrete. For continuous variables, ggplot2 knows how to divide the variable up into a small number of human-readable break points, instead of showing all values.
+
+## Mapping Data to Aesthetics - Discrete Data
+
+Let's explore how ggplot2 handles a discrete variable along the x or y axis in a geom_point() plot. Our str() command earlier told us that country and continent are both character variables, which means they have discrete values and do not vary continuously. Let's recreate the previous chart usin continent for the x axis. 
+
+```{r plot_disc_cont}
+
+ggplot(data = gapminder, mapping = aes(x = continent, y = lifeExp)) +
+  geom_point()
+
+
+```
+
+As the documentation indicated, it is valid to use a categorical variable for either the x or the y axis.  Try one more version, returning gdpPercap to the x axis and using continent for the y.
+
+```{r, plot_cont_disc}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = continent)) +
+  geom_point()
+
+```
+
+Now, note how ggplot2 renders the axis when mapping a categorical variable to the x or y axis. We now see a tick mark and tick label for each value of the variable. What will happen when we try to map country to one of the axes? Create a plot using country and any one of the numerical variables as the x and y axes.
+
+```{r}
+
+ggplot(data = gapminder, mapping = aes(x = country, y = gdpPercap)) +
+  geom_point()
+
+```
+
+Here is an example of a problematic match between a variable and an aesthetic. It is a valid mapping; ggplot2 does not return a warning or error. The points show up in the plot. But our ability to understand patterns in the data is severly hindered by several consequences of this mapping:
+
+- the number of possible values for country is large enough that the labels overlap and we cannot read them
+- the close spacing of the countries make it seem like the data should be read from left to right, analyzed as if some data pattern is going up and down over time. In truth, the countries are simply in alphabetical order, and there is no inherent connection between a country and its neighbors.
+
+In this case, while it is valid to map a categorical variable to this axis, there are practical, perceptual limits on the number of discrete values that should be displayed this way.
+
+## Mapping Data to Aesthetics - Optional Aesthetics
+
+Let's return to our first plot.
+
+```{r plot_cont_cont_2}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+
+```
+
+If we'd like to consider how a third variable interrelates with the others, we can return to the list of optional aesthetics for geom_point().
+
+- alpha
+- colour
+- fill
+- group
+- shape
+- size
+- stroke
+
+Suppose we would like to add population ("pop") to the plot. We are looking for aesthetics that make sense for a continuous variable. Over time it's likely you will memorize the aesthetics that make sense for different data types, but for now we can simply try them and see.
+
+The first option is alpha, which controls the transparency of the points. Let's add a mapping between pop and alpha to our last chart.
+
+```{r plot_cont_cont_alpha}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, alpha = pop)) +
+  geom_point()
+
+```
+
+## Mapping Data to Aesthetics - Evaluating Effectiveness
+
+When we evaluate if that mapping is effective, we can approach it from a few angles. 
+
+Firstly, does ggplot2 understand the variable as we would like it to be understood? Does ggplot2 render this numerical variable continuously? How do we know? Well, first we can look at the chart and see if we can detect a wide range of values for the transparency. It does seem like transparency varies continuously. 
+
+Second, let's think about the differences between discrete and continuous variables on an axis. For continuous variables, we saw a limited number of tick marks at regularly spaced break points. For discrete variables, we saw a tick mark for every value. When we map to an aesthetic like alpha, instead of axes and tick marks we get legends. What do you think about the legend that has appeared for pop? Does it look more like a continuous axis or a discrete axis?
+
+Alpha does seem to be valid as a mapping for a numerical variable, but is it effective? Can we use this new visual property to reason about data trends? I would argue that it is too hard to distinguish between different values of transparency and too hard to see low values for this to be considered effective.
+
+Next, work through the other aesthetics and try to find the best option for displaying pop. 
+
+```{r plot_cont_cont_pop}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop)) +
+  geom_point()
+
+```
+
+What did you pick? Why? Did anything confuse you about the other aesthetics?
+
+I'd argue that size works the best among these choices. Size is a good match for population because size can never be negative and population also can never be negative. It is also intuitive for a point to get larger as the population increases. Finally, the only other reasonable option, color, fails to show much variation in the points that are visible.
+
+## Mapping Data to Aesthetics - Improving Effectiveness
+
+When mappings are not effective out of the box, we can try different mappings, but we can also tweak the plot slightly to improve the output. One problem I see when I look at the plot mapping pop to the size aesthetic is that the points now overlap even more than they did before. 
+
+Without changing the mapping, we can adjust the value of additional aesthetics to improve the plot. In this case, if we reassign the value of alpha to 0.25, we can make the overlap more clear and see the boundaries of the points better. Create a plot where the alpha aesthetic is not mapped to a variable but is simply reassigned to the value 0.25. (Remember back to previous sections where we learned the difference between mapping aesthetics to variables and setting the value of an aesthetic across the whole geometry.)
+
+```{r plot_size_alpha}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop)) +
+  geom_point(alpha=0.25)
+
+```
+
+## Mapping Data to Aesthetics - Additional Data
+
+We've identified a solution for a third numerical variable. Next, see if any additional aesthetics can be mapped to a categorical variable (use continent).
+
+```{r plot_fourth_country}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, color=continent)) +
+  geom_point(alpha=0.25)
+
+```
+
+Which aesthetic did you like best for continent? I lean toward color. The other primary contendor is shape, and the overlap makes it very difficult to differentiate shape. The different shapes also offer different area coverage, so combining shape with size may be somewhat deceptive.
+
+## Mapping Data to Aesthetics - Alternating Continuous and Discrete
+
+For one final test, let's keep using color but change the mapped variable from continent to year. What change do you see in the chart? What is the explanation for this change?
+
+```{r plot_color_year}
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, color=year)) +
+  geom_point(alpha=0.25)
+
+```
+
+When the numerical variable year is mapped to color, ggplot2 changes the legend from a discrete-style legend, with individual labels for each possible value, to a continuous-style legend, with even break points and a continuous gradient of color. The default values for discrete color maps are selected from a rainbow. The default gradient for numerical color maps goes from dark blue to light blue.
+
+
+End of Lesson. Proceed to Formative Assessment.

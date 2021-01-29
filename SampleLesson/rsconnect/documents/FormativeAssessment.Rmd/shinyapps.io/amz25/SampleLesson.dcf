@@ -1,0 +1,13 @@
+name: SampleLesson
+title: SampleLesson
+username:
+account: amz25
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3541283
+bundleId: 4156243
+url: https://amz25.shinyapps.io/SampleLesson/
+when: 1611894665.99642
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: FormativeAssessment.html|FormativeAssessment_files/figure-html/final-plot-1.png|images/.DS_Store

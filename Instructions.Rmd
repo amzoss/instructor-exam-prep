@@ -1,0 +1,22 @@
+---
+title: "Instructions for Sample Lesson"
+author: "Angela Zoss"
+date: "1/28/2021"
+output: html_document
+---
+
+You must prepare a short sample lesson to deliver during the exam.
+
+1. Your topic must be related to data science, and should complement those already in https://github.com/rstudio/concept-maps/. Please get approval for your topic from your examiner _before_ putting together your sample lesson.
+
+2. Send the following materials to your examiner at least two working days before your scheduled exam:
+
+-  A learner persona characterizing the audience for the lesson.
+-  At least one formative assessment (such as a multiple choice question or Parsons Problem).
+-  Any notebooks or slides you would use to support delivery of the lesson.
+
+3. You will have 15 minutes during the examination to deliver the lesson and its formative assessments.
+
+4. Live coding is required. If you make any mistakes, incorporate them into your teaching as you would in front of a class.
+
+5. Your examiner will (try to) work through one of your formative assessments during the lesson. Please allow 1-2 minutes for this in your planning.
