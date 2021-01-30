@@ -1,0 +1,67 @@
+.slide {
+  margin: 5% 5% 5% 5% !important;
+}
+
+.titlepage {
+  text-align: left !important;
+}
+
+.titlepage .title {
+  font-size: 2em !important;
+  margin-left: 0 !important;
+}
+
+.titlepage .subtitle {
+  margin-left: 0 !important;
+  padding-top: 0px !important;
+}
+
+.titlepage .author {
+  margin-left: 0 !important;
+}
+
+.titlepage .date {
+  margin-left: 0 !important;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}
+
+.level1 h1 {
+  font-size: 2em !important;
+  margin-top: 30% !important;
+}
+
+.centered {
+  margin-top: 15% !important;
+}
+
+code  {
+  color: #00428C;
+  background-color: #E4E5E7;
+}
+
+pre.sourceCode, code.sourceCode {
+  font-size: unset;
+}
+
+.ace_editor {
+  font-size: .6em;
+}
+
+.shiny-input-container:not(.shiny-input-container-inline) {
+  width: unset;
+}
+
+label {
+  font-size: unset;
+}
+
+div.slide {
+  line-height: unset;
+}
+
+p {
+  margin-left: unset;
+}

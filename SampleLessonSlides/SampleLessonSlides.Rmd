@@ -1,0 +1,226 @@
+---
+title: "Sample Lesson"
+subtitle: "Aesthetics Mapping in ggplot2"
+author: "Angela Zoss"
+date: "2021-02-01"
+output: 
+  slidy_presentation:
+    css: css/styles.css
+    duration: 15
+    df_print: paged
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+
+
+# find local storage: run below, then navigate file directory to locate specific folders
+# file.path(rappdirs::user_data_dir(), "R", "learnr", "tutorial", "storage")
+
+# clear previous results
+local_storage <- file.path("/Users/az49/Library/Application Support/R/learnr/tutorial/storage/az49/%2FUsers%2Faz49%2FDropbox%2Fpersonal-temp%2FRoots%20and%20other%20workshops%2Finstructor-exam-prep%2FSampleLessonSlides/")
+unlink(local_storage, recursive = TRUE)
+
+
+```
+
+
+## Basic plot structure
+
+- visualization layer with data frame name
+- geometry layer, added with `+`
+
+```{r template-plot, eval=FALSE, echo=TRUE}
+
+ggplot(data = data_frame) + 
+  geom_point()
+
+```
+
+---
+
+```{r final-plot, echo=FALSE}
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+
+```
+
+---
+
+```{r mpg-data, echo=FALSE}
+
+mpg %>% head()
+
+```
+
+## {.smaller}
+
+<div class="row">
+
+<div class="col-lg-8">
+
+```{r final-plot-2, echo=FALSE}
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+
+```
+</div>
+<div class="col-lg-4">
+
+```{r mpg-data-2, echo=FALSE}
+
+names(mpg) %>% as_tibble() %>% rename("column_names" = "value")
+
+```
+</div>
+</div>
+
+# Creating a mapping between columns and plot components
+
+## {.centered .bigger}
+
+In `ggplot2`, matching dataset columns to plot components is called "mapping." 
+
+## {.bigger}
+
+Plot components are called visual properties or "aesthetics."
+
+\ 
+
+Examples:
+
+- **`x`**
+- **`y`**
+- `color`
+- `fill`
+- `size`
+- `alpha` (transparency)
+
+## Make a pair {.centered .bigger}
+
+`<aesthetic> = <variable>`
+
+\ 
+
+Examples:
+
+\ 
+
+- `x = displ`
+- `y = hwy`
+
+## Make a list of pairs {.centered .bigger}
+
+`x = displ, y = hwy`
+
+## Wrap the list with `aes()` {.centered .bigger}
+
+`aes(<list of mapping pairs>)`
+
+\ 
+
+`aes(x = displ, y = hwy)`
+
+
+## Insert list into geometry layer {.centered .bigger}
+
+`geom_...(mapping = aes(...))`
+
+\ 
+
+`geom_point(mapping = aes(x = displ, y = hwy))`
+
+# Exercises
+
+## {.bigger}
+
+Create a plot with `mpg`, mapping `x` and `y` to `displ` and `hwy`
+
+```{r first-plot, exercise=TRUE}
+
+
+```
+
+## {.bigger}
+
+Add a mapping between `color` and `class`
+
+```{r add-color, exercise=TRUE}
+
+
+```
+
+# Assigning constant values to aesthetics
+
+## {.bigger}
+
+```{r x-y-plot, echo=FALSE}
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+```
+
+## {.bigger}
+
+Change color of points to red
+
+```{r static-red, exercise=TRUE}
+
+# Hint: you can access common colors using their names as strings (e.g., "black", "red")
+
+
+```
+
+## {.bigger}
+
+Add mapping between `color` and `class`.
+Assign `size` to 7 and `alpha` (transparency) to .75
+
+```{r static-two, exercise=TRUE}
+
+
+
+```
+
+Now let's check our understanding with a few questions.
+
+# Formative Assessment
+
+## Mapping aesthetics {.smaller}
+
+Edit the code below to add the following aesthetics mapping to the plot geometry layer:
+
+- x to carat
+- y to price
+- color to clarity
+
+Click on "Run Code" to execute the code and "Solution" to check your solution. 
+
+*Note: this dataset is large and the code may take a few seconds to execute.*
+
+```{r form-ex, exercise=TRUE}
+
+ggplot(data = diamonds) +
+  geom_point()
+
+```
+
+## Practice assigning static values
+
+```{r mult-choice}
+  question("Consider this code for a geom_point layer. Which is the correct way to change all of the dots to the same shade of blue?",
+    answer("geom_point(aes(x = age, y = weight, color = \"blue\"))"),
+    answer("geom_point(aes(x = age, y = weight), color = \"blue\")", correct = TRUE),
+    answer("geom_point(aes(x = age, y = weight, color = blue))"),
+    answer("geom_point(aes(x = age, y = weight), color = blue)"),
+    correct = "Congratulations, that's correct! When assigning a constant value to an aesthetic, you must add it to the geometry layer outside of the aesthetics mapping. Only variables go inside aes(), and only variables can be used without being surrounded by quotation marks.",
+    allow_retry = TRUE,
+    try_again = "Unfortunately that's not quite correct. Try again?"
+  )
+```
