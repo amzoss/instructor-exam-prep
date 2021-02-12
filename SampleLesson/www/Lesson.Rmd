@@ -1,5 +1,5 @@
 ---
-title: "Lesson - Continuous vs. Discrete Variables in ggplot2"
+title: "Lesson - Aesthetics Mapping in ggplot2"
 author: "Angela Zoss"
 date: "1/26/2021"
 output: 

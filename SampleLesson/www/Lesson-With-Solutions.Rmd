@@ -1,5 +1,5 @@
 ---
-title: "Lesson - Continuous vs. Discrete Variables in ggplot2"
+title: "Lesson - Aesthetics Mapping in ggplot2"
 author: "Angela Zoss"
 date: "1/26/2021"
 output: 
@@ -150,7 +150,7 @@ Edit the code below to add the following aesthetics mapping to the plot geometry
 
 *Note: this dataset is large and the code may take a few seconds to execute.*
 
-```{r form-ex, exercise=TRUE}
+```{r form-ex, eval=FALSE, exercise=TRUE}
 
 ggplot(data = diamonds) +
   geom_point()

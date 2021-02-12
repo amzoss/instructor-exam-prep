@@ -1,0 +1,13 @@
+name: SampleLesson
+title: SampleLesson
+username:
+account: amz25
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3541283
+bundleId: 4165263
+url: https://amz25.shinyapps.io/SampleLesson/
+when: 1612148724.93082
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: images/.DS_Store

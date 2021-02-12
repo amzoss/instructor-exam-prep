@@ -1,6 +1,6 @@
 ---
-title: "Sample Lesson"
-subtitle: "Aesthetics Mapping in ggplot2"
+title: "Sample Lesson: Aesthetics Mapping in ggplot2"
+subtitle: "https://amz25.shinyapps.io/SampleLesson/#section-lesson"
 author: "Angela Zoss"
 date: "2021-02-01"
 output: 
@@ -57,7 +57,7 @@ mpg %>% head()
 
 ```
 
-## {.smaller}
+---
 
 <div class="row">
 
@@ -70,7 +70,7 @@ ggplot(data = mpg) +
 
 ```
 </div>
-<div class="col-lg-4">
+<div class="col-lg-4 smaller">
 
 ```{r mpg-data-2, echo=FALSE}
 
@@ -80,9 +80,7 @@ names(mpg) %>% as_tibble() %>% rename("column_names" = "value")
 </div>
 </div>
 
-# Creating a mapping between columns and plot components
-
-## {.centered .bigger}
+## Creating a mapping {.centered .bigger}
 
 In `ggplot2`, matching dataset columns to plot components is called "mapping." 
 
@@ -101,9 +99,9 @@ Examples:
 - `size`
 - `alpha` (transparency)
 
-## Make a pair {.centered .bigger}
+## Step 1: Make a pair {.centered .bigger}
 
-`<aesthetic> = <variable>`
+`<aesthetic> = <column name>`
 
 \ 
 
@@ -114,11 +112,11 @@ Examples:
 - `x = displ`
 - `y = hwy`
 
-## Make a list of pairs {.centered .bigger}
+## Step 2: Combine pairs into list {.centered .bigger}
 
 `x = displ, y = hwy`
 
-## Wrap the list with `aes()` {.centered .bigger}
+## Step 3: Wrap the list with `aes()` {.centered .bigger}
 
 `aes(<list of mapping pairs>)`
 
@@ -127,7 +125,7 @@ Examples:
 `aes(x = displ, y = hwy)`
 
 
-## Insert list into geometry layer {.centered .bigger}
+## Step 4: Insert list into geometry layer {.centered .bigger}
 
 `geom_...(mapping = aes(...))`
 
@@ -135,9 +133,7 @@ Examples:
 
 `geom_point(mapping = aes(x = displ, y = hwy))`
 
-# Exercises
-
-## {.bigger}
+## Exercise: Map x and y {.bigger}
 
 Create a plot with `mpg`, mapping `x` and `y` to `displ` and `hwy`
 
@@ -146,7 +142,7 @@ Create a plot with `mpg`, mapping `x` and `y` to `displ` and `hwy`
 
 ```
 
-## {.bigger}
+## Exercise: Map x, y, and color {.bigger}
 
 Add a mapping between `color` and `class`
 
@@ -155,9 +151,7 @@ Add a mapping between `color` and `class`
 
 ```
 
-# Assigning constant values to aesthetics
-
-## {.bigger}
+## Assigning constant values to aesthetics {.bigger}
 
 ```{r x-y-plot, echo=FALSE}
 
@@ -166,7 +160,7 @@ ggplot(data = mpg) +
 
 ```
 
-## {.bigger}
+## Assigning a constant value {.bigger}
 
 Change color of points to red
 
@@ -177,7 +171,7 @@ Change color of points to red
 
 ```
 
-## {.bigger}
+## Assigning two constant values {.bigger}
 
 Add mapping between `color` and `class`.
 Assign `size` to 7 and `alpha` (transparency) to .75
@@ -190,7 +184,9 @@ Assign `size` to 7 and `alpha` (transparency) to .75
 
 Now let's check our understanding with a few questions.
 
-# Formative Assessment
+## Formative Assessment {.centered}
+
+https://amz25.shinyapps.io/SampleLesson/#section-formative-assessment
 
 ## Mapping aesthetics {.smaller}
 
